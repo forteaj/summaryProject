@@ -1,0 +1,12 @@
+gensim
+faiss-cpu
+nltk
+spacy
+transformers
+torch
+pandas
+numpy
+matplotlib
+seaborn
+wordcloud
+whisper
