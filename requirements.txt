@@ -10,4 +10,5 @@ matplotlib
 seaborn
 wordcloud
 whisper
-sklearn
+scikit-learn
+PyMuPDF
