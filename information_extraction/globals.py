@@ -13,13 +13,11 @@ CLEAN_PATTERNS = [
         re.I | re.M
     ),
     re.compile(     # Pattern found from 21-22 to 24-25
-        r'^(?:Código\s+seguro\s+de\s+Verificación|CSV)\s*:.*?\n\s*FIRMANTE.*',
-        re.I | re.M | re.S
+        r'^(?:Código\s+seguro\s+de\s+Verificación|CSV)\s*:.*\n'
+        r'(?:.*\n)*?'
+        r'^FIRMANTE.*$',
+        re.I | re.M
     ),
-    re.compile(     # Remove page numbers
-        r'(?:^\s*\n)*^\s*\d+\s*$((?:\n\s*)*)',
-        re.M
-    )
 ]
 
 STRUCTURE_PATTERNS = {

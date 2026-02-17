@@ -5,17 +5,31 @@ import re
 
 from information_extraction.globals import CLEAN_PATTERNS, STRUCTURE_PATTERNS
 
+def remove_page_numbers(text):
+    lines = text.strip().split("\n")
+
+    if lines and lines[0].strip().isdigit():
+        lines = lines[1:]
+
+    if lines and lines[-1].strip().isdigit():
+        lines = lines[:-1]
+
+    return "\n".join(lines)
+
 def pdf_to_txt(pdf_path):
     pages = []
     with fitz.open(pdf_path) as pdf:
         for page in pdf:
-            pages.append(page.get_text())
+            text = remove_page_numbers(page.get_text())
+            pages.append(text)
     
     return ' '.join(pages)
 
 def clean_text(text):
     for pattern in CLEAN_PATTERNS:
         text = pattern.sub('', text)
+    
+    text = re.sub(r'\n\s*\n+', '\n', text) # Collapse new lines
     return text
 
 def parse_hierarchy(text):
@@ -51,14 +65,19 @@ def parse_hierarchy(text):
     
     return json
 
-filename = 'ayudas_25-26'
+def preprocess_pdf(filename, save=True):
+    text = pdf_to_txt(f'corpus/{filename}.pdf')
+    clean = clean_text(text)
+    final = parse_hierarchy(clean)
 
-text = pdf_to_txt(f'corpus/{filename}.pdf')
-clean = clean_text(text)
+    print(clean)
 
-os.makedirs('json', exist_ok=True)
-with open(f'json/{filename}.json', 'w', encoding='utf-8') as f:
-    json.dump(parse_hierarchy(clean), f, ensure_ascii=False, indent=2)
+    if save:
+        os.makedirs('json', exist_ok=True)
+        with open(f'json/{filename}.json', 'w', encoding='utf-8') as f:
+            json.dump(final, f, ensure_ascii=False, indent=2)
+    
+    return final
 
 
 
