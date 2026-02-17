@@ -1,5 +1,13 @@
 import re
 
+CORPUS = [
+    'ayudas_21-22', 
+    'ayudas_22-23', 
+    'ayudas_23-24', 
+    'ayudas_24-25', 
+    'ayudas_25-26'
+]
+
 """
 Flags:
     re.I - Case insensitive

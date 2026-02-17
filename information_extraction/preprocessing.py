@@ -70,14 +70,12 @@ def preprocess_pdf(filename, save=True):
     clean = clean_text(text)
     final = parse_hierarchy(clean)
 
-    print(clean)
-
     if save:
         os.makedirs('json', exist_ok=True)
-        with open(f'json/{filename}.json', 'w', encoding='utf-8') as f:
+        with open(f'corpus_json/{filename}.json', 'w', encoding='utf-8') as f:
             json.dump(final, f, ensure_ascii=False, indent=2)
     
     return final
 
-
+preprocess_pdf("ayudas_24-25")
 
