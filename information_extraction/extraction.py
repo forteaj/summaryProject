@@ -212,7 +212,8 @@ def main():
 
 
         info = extraction_pipeline(
-            ("umbrales", pdf["IV"]["articles"]["19"]["content"], extract_umbrales),
+            ("umbrales",
+             ["articles"]["19"]["content"], extract_umbrales),
             ("plazos", pdf, extract_plazos),
 
         )
