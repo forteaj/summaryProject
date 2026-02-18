@@ -1,0 +1,50 @@
+{
+  "umbrales": {
+    "1": {
+      "1": 8843,
+      "2": 13264,
+      "3": 17685,
+      "4": 22107,
+      "5": 25644,
+      "6": 29181,
+      "7": 32718,
+      "8": 36255,
+      "8+": 3536
+    },
+    "2": {
+      "1": 13898,
+      "2": 23724,
+      "3": 32201,
+      "4": 38242,
+      "5": 42743,
+      "6": 46142,
+      "7": 49503,
+      "8": 52850,
+      "8+": 3340
+    },
+    "3": {
+      "1": 14818,
+      "2": 25293,
+      "3": 34332,
+      "4": 40773,
+      "5": 45572,
+      "6": 49196,
+      "7": 52780,
+      "8": 56348,
+      "8+": 3561
+    }
+  },
+  "plazos": {
+    "article_number": "16",
+    "article_title": "4 de la Ley 39/2015, de 1 de octubre, del Procedimiento Administrativo Común de las Administraciones Públicas",
+    "deadline": {
+      "type": "absolute",
+      "start_datetime": "2025-03-24T08:00",
+      "end_datetime": "2025-05-14T15:00",
+      "timezone_note": "hora peninsular",
+      "inclusive": true,
+      "evidence": "desde el día 24 de marzo de 2025, a las 8,00, hora peninsular, hasta el 14 de mayo de 2025, a las 15,00"
+    },
+    "chapter": "VII"
+  }
+}
