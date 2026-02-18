@@ -2,6 +2,11 @@ import fitz
 import json
 import os
 import re
+from pathlib import Path
+import fitz
+
+
+ROOT = Path(__file__).resolve().parent.parent  # project
 
 from information_extraction.globals import CLEAN_PATTERNS, STRUCTURE_PATTERNS
 
@@ -16,14 +21,17 @@ def remove_page_numbers(text):
 
     return "\n".join(lines)
 
+
+
 def pdf_to_txt(pdf_path):
+    pdf_path = ROOT / pdf_path
     pages = []
-    with fitz.open(pdf_path) as pdf:
+    with fitz.open(str(pdf_path)) as pdf:
         for page in pdf:
             text = remove_page_numbers(page.get_text())
             pages.append(text)
-    
-    return ' '.join(pages)
+    return " ".join(pages)
+
 
 def clean_text(text):
     for pattern in CLEAN_PATTERNS:
@@ -65,17 +73,30 @@ def parse_hierarchy(text):
     
     return json
 
+
+
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent  # project/
+
+
 def preprocess_pdf(filename, save=True):
+    #print("WORKING DIR:", Path.cwd())
     text = pdf_to_txt(f'corpus/{filename}.pdf')
     clean = clean_text(text)
     final = parse_hierarchy(clean)
+    output_dir = ROOT / "corpus_json"
+    output_dir.mkdir(exist_ok=True)
+
+    output_path = output_dir / f"{filename}.json"
 
     if save:
         os.makedirs('json', exist_ok=True)
-        with open(f'corpus_json/{filename}.json', 'w', encoding='utf-8') as f:
+        with open(output_path, 'w', encoding='utf-8') as f:
             json.dump(final, f, ensure_ascii=False, indent=2)
     
     return final
 
-preprocess_pdf("ayudas_24-25")
+if __name__ == "__main__":
+    preprocess_pdf("ayudas_24-25")
 
