@@ -1,6 +1,6 @@
 {
-  "umbrales": {
-    "1": {
+  "umbrales renta": {
+    "umbral 1": {
       "1": 8422,
       "2": 12632,
       "3": 16843,
@@ -9,9 +9,9 @@
       "6": 27791,
       "7": 31160,
       "8": 34529,
-      "8+": 3368
+      "incremento miembros adicionales al 8": 3368
     },
-    "2": {
+    "umbral 2": {
       "1": 13236,
       "2": 22594,
       "3": 30668,
@@ -20,9 +20,9 @@
       "6": 43945,
       "7": 47146,
       "8": 50333,
-      "8+": 3181
+      "incremento miembros adicionales al 8": 3181
     },
-    "3": {
+    "umbral 3": {
       "1": 14112,
       "2": 24089,
       "3": 32697,
@@ -31,7 +31,21 @@
       "6": 46853,
       "7": 50267,
       "8": 53665,
-      "8+": 3391
+      "incremento miembros adicionales al 8": 3391
+    }
+  },
+  "plazos solicitud": {
+    "universitario": {
+      "desde": null,
+      "hasta": "2021-10-14T00:00"
+    },
+    "no universitario": {
+      "desde": null,
+      "hasta": "2021-09-30T00:00"
+    },
+    "excepciones": {
+      "desde": null,
+      "hasta": "2021-12-31T00:00"
     }
   }
 }

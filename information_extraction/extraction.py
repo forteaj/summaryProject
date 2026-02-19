@@ -4,8 +4,9 @@ import re
 from typing import Callable, Dict, Any, List, Tuple
 from typing import Dict, Any, Optional
 
-from information_extraction.globals import CORPUS
+from information_extraction.globals import CORPUS, DATE_PATTERN
 from information_extraction.preprocessing import preprocess_pdf
+from information_extraction.util import iso
 
 """
 Function to extract different information from text.
@@ -19,6 +20,7 @@ def extraction_pipeline(*tasks: Tuple[str, str, Callable[[str], Any]]) -> Dict[s
     info = {}
 
     for key, text, function in tasks:
+        text = re.sub('\n', '', text)
         info[key] = function(text)
 
     return info
@@ -28,9 +30,9 @@ Template-based approach for extracting salary thresholds (umbrales) from a speci
 """
 def extract_umbrales(text):
     result = {
-        "1": {},
-        "2": {},
-        "3": {}
+        "umbral 1": {},
+        "umbral 2": {},
+        "umbral 3": {}
     }
 
     umbrales = re.findall(r'\b\d{1,3}(?:\.\d{3})+\b', text)
@@ -45,180 +47,86 @@ def extract_umbrales(text):
         for u in range(3):
             start = u * 9
             for i in range(8):
-                result[str(u+1)][str(i+1)] = umbrales[start + i]
-            result[str(u+1)]["8+"] = umbrales[start + 8]
+                result["umbral " + str(u+1)][str(i+1)] = umbrales[start + i]
+            result["umbral " + str(u+1)]["incremento miembros adicionales al 8"] = umbrales[start + 8]
 
     elif style == "table":
         for i in range(8):
-            result["1"][str(i+1)] = umbrales[i*3]
-            result["2"][str(i+1)] = umbrales[i*3 + 1]
-            result["3"][str(i+1)] = umbrales[i*3 + 2]
-        result["1"]["8+"] = umbrales[24]
-        result["2"]["8+"] = umbrales[25]
-        result["3"]["8+"] = umbrales[26]
+            result["umbral 1"][str(i+1)] = umbrales[i*3]
+            result["umbral 2"][str(i+1)] = umbrales[i*3 + 1]
+            result["umbral 3"][str(i+1)] = umbrales[i*3 + 2]
+        result["umbral 1"]["incremento miembros adicionales al 8"] = umbrales[24]
+        result["umbral 2"]["incremento miembros adicionales al 8"] = umbrales[25]
+        result["umbral 3"]["incremento miembros adicionales al 8"] = umbrales[26]
 
     return result
 
+def extract_compatibility(text):
+    pass
 
-MONTHS = {
-    "enero": "01",    "febrero": "02",    "marzo": "03",    "abril": "04",    "mayo": "05",    "junio": "06",    "julio": "07",
-    "agosto": "08",    "septiembre": "09",    "setiembre": "09",
-    "octubre": "10",    "noviembre": "11",    "diciembre": "12"
-}
+def extract_deducciones(text):
+    pass
 
-def _clean(text):
-    if not isinstance(text, str):
-        return ""
+"""
+Template-based approach for extracting submission dates from a specific article. 
+"""
+def extract_plazos(text):
+    def get_key(sentence):
+        prefix = sentence.lower()[:match.start()]
 
-    text = re.sub(r"(\w)-\s*\n(\w)", r"\1\2", text)  # palabras cortadas
-    text = re.sub(r"\s+", " ", text)
-    return text.strip()
+        if "hasta" in prefix:
+            return "hasta"
+        if "desde" in prefix:
+            return "desde"
+        
+        return "hasta" # We default to "hasta"
 
-def _iso(day, month_name, year, hh, mm):
-    month = MONTHS.get(month_name.lower())
-    if not month:
-        return None
-
-    return f"{year}-{month}-{day.zfill(2)}T{hh.zfill(2)}:{mm}"
-
-def extract_plazo_from_article_text(article_text):
-
-    t = _clean(article_text)
-
-    header = re.search(
-        r"\bart[ií]culo\s+(\d+)\.\s*([^.]{1,200})\.",
-        t,
-        flags=re.IGNORECASE
-    )
-
-    article_number = header.group(1) if header else None
-    article_title = header.group(2).strip() if header else None
-
-    # --- CASO 1: desde ... hasta ...
-    pattern_range = (
-        r"\bdesde\b.*?"
-        r"(\d{1,2})\s+de\s+(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|setiembre|octubre|noviembre|diciembre)\s+de\s+(\d{4})"
-        r".{0,80}?\ba\s+las\s+(\d{1,2})[,:](\d{2})"
-        r".{0,200}?\bhasta\b.*?"
-        r"(\d{1,2})\s+de\s+(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|setiembre|octubre|noviembre|diciembre)\s+de\s+(\d{4})"
-        r".{0,80}?\ba\s+las\s+(\d{1,2})[,:](\d{2})"
-    )
-
-    match = re.search(pattern_range, t, flags=re.IGNORECASE)
-
-    if match:
-        start_dt = _iso(match.group(1), match.group(2), match.group(3),
-                        match.group(4), match.group(5))
-
-        end_dt = _iso(match.group(6), match.group(7), match.group(8),
-                      match.group(9), match.group(10))
-
-        return {
-            "article_number": article_number,
-            "article_title": article_title,
-            "deadline": {
-                "type": "absolute",
-                "start_datetime": start_dt,
-                "end_datetime": end_dt,
-                "timezone_note": "hora peninsular" if re.search(r"hora\s+peninsular", t, re.IGNORECASE) else None,
-                "inclusive": bool(re.search(r"ambos\s+inclusive", t, re.IGNORECASE)),
-                "evidence": match.group(0)
-            }
-        }
-
-    # --- CASO 2  hasta el <fecha>
-    pattern_until = (
-        r"\bhasta\b.*?"
-        r"(\d{1,2})\s+de\s+"
-        r"(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|setiembre|octubre|noviembre|diciembre)"
-        r"\s+de\s+(\d{4})"
-    )
-
-    matches = re.findall(pattern_until, t, flags=re.IGNORECASE)
-
-    if matches:
-        deadlines = []
-        for d, m, y in matches:
-            deadlines.append(_iso(d, m, y, "00", "00"))  # sin hora → 00:00
-
-        return {
-            "article_number": article_number,
-            "article_title": article_title,
-            "deadline": {
-                "type": "until_multiple" if len(deadlines) > 1 else "until",
-                "start_datetime": None,
-                "end_datetime": deadlines if len(deadlines) > 1 else deadlines[0],
-                "timezone_note": None,
-                "inclusive": bool(re.search(r"inclusive", t, re.IGNORECASE)),
-                "evidence": "hasta ..."
-            }
-        }
-
-    return {
-        "article_number": article_number,
-        "article_title": article_title,
-        "deadline": {
-            "type": "unknown",
-            "start_datetime": None,
-            "end_datetime": None
-        }
+    result = {
+        "universitario": {"desde": None, "hasta": None},
+        "no universitario": {"desde": None, "hasta": None},
+        "excepciones": {"desde": None, "hasta": None}
     }
 
+    sections = re.split(r'\d+\. ', text)[1:]
 
-def extract_plazos(pdf):
+    # --- Regular dates ---
 
-    if not isinstance(pdf, dict):
-        return {"deadline": {"type": "unknown"}}
+    sentences = re.split(r'\.', sections[0])
+    for sentence in sentences:
+        contexts = []
+        if re.search(r'\bno universitarios\b', sentence.lower()):
+            contexts.append("no universitario")
+        if re.search(r'(?<!no )\buniversitarios\b', sentence.lower()):
+            contexts.append("universitario")
+        
+        if contexts:
+            for match in DATE_PATTERN.finditer(sentence):
+                iso_date = iso(match)
+                key = get_key(sentence)
+                    
+                for context in contexts:
+                    result[context][key] = iso_date
+    
+    # --- Exception dates ---
 
-    for chapter_id, chapter_data in pdf.items():
+    for match in DATE_PATTERN.finditer(sections[1]):
+        iso_date = iso(match)
+        key = get_key(sentence)
 
-        articles = chapter_data.get("articles", {})
+        result["excepciones"][key] = iso_date
 
-        for article_id, article in articles.items():
-
-            title = _clean(article.get("title") or "").lower()
-            content = article.get("content") or ""
-
-            if "plazo" in title:
-
-                result = extract_plazo_from_article_text(content)
-
-                if result.get("article_number") is None:
-                    result["article_number"] = str(article_id)
-
-                if result.get("article_title") is None:
-                    result["article_title"] = article.get("title")
-
-                result["chapter"] = chapter_id
-
-                return result
-
-    return {
-        "article_number": None,
-        "article_title": None,
-        "deadline": {
-            "type": "unknown",
-            "start_datetime": None,
-            "end_datetime": None
-        }
-    }
-
-
+    return result
 
 def main():
     for filename in CORPUS:
         pdf = preprocess_pdf(filename)
-        print(pdf["IV"]["articles"].keys())
-
 
         info = extraction_pipeline(
-            ("umbrales", pdf["IV"]["articles"]["19"]["content"], extract_umbrales),
-            ("plazos", pdf, extract_plazos),
-
+            ("umbrales renta", pdf["IV"]["articles"]["19"]["content"], extract_umbrales),
+            ("plazos solicitud", pdf["VII"]["articles"]["48"]["content"], extract_plazos),
         )
 
         os.makedirs('information_extraction/results', exist_ok=True)
         with open(f'information_extraction/results/{filename}.json', 'w', encoding='utf-8') as f:
             json.dump(info, f, ensure_ascii=False, indent=2)
-
 main()

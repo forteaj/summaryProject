@@ -3,12 +3,10 @@ import json
 import os
 import re
 from pathlib import Path
-import fitz
-
-
-ROOT = Path(__file__).resolve().parent.parent  # project
 
 from information_extraction.globals import CLEAN_PATTERNS, STRUCTURE_PATTERNS
+
+ROOT = Path(__file__).resolve().parent.parent
 
 def remove_page_numbers(text):
     lines = text.strip().split("\n")
@@ -20,8 +18,6 @@ def remove_page_numbers(text):
         lines = lines[:-1]
 
     return "\n".join(lines)
-
-
 
 def pdf_to_txt(pdf_path):
     pdf_path = ROOT / pdf_path
@@ -73,21 +69,13 @@ def parse_hierarchy(text):
     
     return json
 
-
-
-from pathlib import Path
-
-ROOT = Path(__file__).resolve().parent.parent  # project/
-
-
 def preprocess_pdf(filename, save=True):
-    #print("WORKING DIR:", Path.cwd())
     text = pdf_to_txt(f'corpus/{filename}.pdf')
     clean = clean_text(text)
     final = parse_hierarchy(clean)
+
     output_dir = ROOT / "corpus_json"
     output_dir.mkdir(exist_ok=True)
-
     output_path = output_dir / f"{filename}.json"
 
     if save:
