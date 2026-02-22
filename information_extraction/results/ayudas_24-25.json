@@ -34,6 +34,58 @@
       "incremento miembros adicionales al 8": 3561
     }
   },
+  "deducciones renta": [
+    {
+      "cantidad": 50,
+      "tipo": "porcentaje",
+      "descripcion": "El 50 por 100 de los ingresos aportados por cualquier miembro computable de la familia distinto de los sustentadores principales."
+    },
+    {
+      "cantidad": 525.0,
+      "tipo": "euros",
+      "descripcion": "525,00 euros por cada hermano que sea miembro computable, incluido el solicitante, que conviva en el domicilio familiar"
+    },
+    {
+      "cantidad": 800.0,
+      "tipo": "euros",
+      "descripcion": "800,00 euros para familias numerosas de categoría especial"
+    },
+    {
+      "cantidad": 2000.0,
+      "tipo": "euros",
+      "descripcion": "2.000,00 euros cuando éste se encuentre afectado de una discapacidad de grado igual o superior al sesenta y cinco por ciento"
+    },
+    {
+      "cantidad": 1811.0,
+      "tipo": "euros",
+      "descripcion": "1.811,00 euros por cada hermano o hijo del solicitante o el propio solicitante que esté afectado de discapacidad, legalmente calificada, de grado igual o superior al treinta y tres por ciento"
+    },
+    {
+      "cantidad": 2881.0,
+      "tipo": "euros",
+      "descripcion": "2.881,00 euros cuando la discapacidad sea de grado igual o superior al sesenta cinco por ciento"
+    },
+    {
+      "cantidad": 4000.0,
+      "tipo": "euros",
+      "descripcion": "4.000,00 euros para el propio solicitante universitario quien esté afectado por la discapacidad de grado igual o superior al sesenta y cinco por ciento"
+    },
+    {
+      "cantidad": 1176.0,
+      "tipo": "euros",
+      "descripcion": "1.176,00 euros por cada hermano del solicitante o el propio solicitante menor de 25 años que curse estudios universitarios"
+    },
+    {
+      "cantidad": 20,
+      "tipo": "porcentaje",
+      "descripcion": "El 20 % de la renta familiar cuando el solicitante sea huérfano absoluto y menor de 25 años."
+    },
+    {
+      "cantidad": 500.0,
+      "tipo": "euros",
+      "descripcion": "500,00 euros por pertenecer el solicitante a una familia monoparental"
+    }
+  ],
   "plazos solicitud": {
     "universitario": {
       "desde": "2024-03-19T09:00",

@@ -60,3 +60,5 @@ DATE_PATTERN = re.compile(
     re.IGNORECASE
 )
 
+LLM_ENDPOINT = "http://localhost:11434/api/generate"
+

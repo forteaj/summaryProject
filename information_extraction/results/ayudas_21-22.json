@@ -34,6 +34,53 @@
       "incremento miembros adicionales al 8": 3391
     }
   },
+  "deducciones renta": [
+    {
+      "cantidad": 50,
+      "tipo": "porcentaje",
+      "descripcion": "del 50 por ciento de los ingresos aportados por cualquier miembro computable de la familia distinto de los sustentadores principales"
+    },
+    {
+      "cantidad": 525,
+      "tipo": "euros",
+      "descripcion": "por cada hermano que sea miembro computable, incluido el solicitante, que conviva en el domicilio familiar"
+    },
+    {
+      "cantidad": 800,
+      "tipo": "euros",
+      "descripcion": "por cada hermano que sea miembro computable, incluido el solicitante, que convive en el domicilio familiar"
+    },
+    {
+      "cantidad": 2000,
+      "tipo": "euros",
+      "descripcion": "deducción aplicable al solicitante universitario cuando está afectado de una discapacidad de grado igual o superior al sesenta y cinco por ciento"
+    },
+    {
+      "cantidad": 1811,
+      "tipo": "euros",
+      "descripcion": "por cada hermano o hijo del solicitante o el propio solicitante que esté afectado de discapacidad, legalmente calificada, de grado igual o superior al treinta y tres por ciento"
+    },
+    {
+      "cantidad": 2881,
+      "tipo": "euros",
+      "descripcion": "por cada hermano o hijo del solicitante o el propio solicitante que esté afectado de discapacidad, legalmente calificada, de grado igual o superior al sesenta y cinco por ciento"
+    },
+    {
+      "cantidad": 1176,
+      "tipo": "euros",
+      "descripcion": "por cada hermano del solicitante o el propio solicitante menor de 25 años que curse estudios universitarios y resida fuera del domicilio familiar, cuando sean dos o más los estudiantes con residencia fuera del domicilio familiar por razón de estudios universitarios"
+    },
+    {
+      "cantidad": 20,
+      "tipo": "porcentaje",
+      "descripcion": "del 20 por ciento de la renta familiar cuando el solicitante sea huérfano absoluto y menor de 25 años"
+    },
+    {
+      "cantidad": 500,
+      "tipo": "euros",
+      "descripcion": "por pertenecer el solicitante a una familia monoparental"
+    }
+  ],
   "plazos solicitud": {
     "universitario": {
       "desde": null,

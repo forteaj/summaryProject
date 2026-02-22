@@ -1,10 +1,11 @@
 import json
 import os
 import re
+import requests
 from typing import Callable, Dict, Any, List, Tuple
 from typing import Dict, Any, Optional
 
-from information_extraction.globals import CORPUS, DATE_PATTERN
+from information_extraction.globals import CORPUS, DATE_PATTERN, LLM_ENDPOINT
 from information_extraction.preprocessing import preprocess_pdf
 from information_extraction.util import iso
 
@@ -61,12 +62,6 @@ def extract_umbrales(text):
 
     return result
 
-def extract_compatibility(text):
-    pass
-
-def extract_deducciones(text):
-    pass
-
 """
 Template-based approach for extracting submission dates from a specific article. 
 """
@@ -79,7 +74,7 @@ def extract_plazos(text):
         if "desde" in prefix:
             return "desde"
         
-        return "hasta" # We default to "hasta"
+        return "hasta" # Default to "hasta"
 
     result = {
         "universitario": {"desde": None, "hasta": None},
@@ -117,16 +112,115 @@ def extract_plazos(text):
 
     return result
 
+def get_json_from_prompt(prompt, model="qwen2.5:7b"):
+    response = requests.post(
+        LLM_ENDPOINT,
+        json={
+            "model": model,
+            "prompt": prompt,
+            "stream": False,
+            "keep_alive": "0m",
+            "options": {
+                "temperature": 0
+            }
+        }
+    )
+
+    output = response.json()["response"]
+
+    try:
+        return json.loads(output)
+    except:
+        print("Invalid JSON:", output)
+        return None
+
+"""
+LLM-based approach for extracting deductions from a specific text. 
+"""
+def extract_deducciones(text):
+    prompt = f"""
+    You are an information extraction system.
+
+    Extract the deductions from the Spanish text below and return ONLY valid JSON.
+    Do not explain anything.
+    Do not include markdown.
+    Follow exactly this JSON schema for each of the deductions:
+
+    {{
+        "cantidad": 0,
+        "tipo": "",
+        "descripcion": ""
+    }}
+
+    If multiple deductions exist, return multiple objects.
+    If none exist, return an empty list [].
+    "tipo" can ONLY be "porcentaje" or "euros".
+    "descripcion" should not include any amount, and only refer to the amount extracted in "cantidad".
+
+    Text:
+    {text}
+
+    Output:
+    """
+
+    return get_json_from_prompt(prompt)
+
+# Capítulo VII Articulo 55 
+def extract_compatibilidad(text):
+    pass # TODO
+
+# Capítulo VI Articulo 40 
+def extract_obligaciones(text):
+    pass # TODO
+
+# Capítulo III Articulo 15 
+def extract_requisitos(text):
+    pass # TODO
+
+# Capítulo II Articulos 4 - 11 (concat texts?)
+    # Artículo 4 - Clases (introducción)
+    # Artículo 5 - Beca matrícula
+    # Artículo 6 - Cuantía fija
+    # Artículo 7 - Cuantía residencia
+    # Artículo 8 - Cuantía excelencia
+    # Artículo 9 - Beca básica
+    # Artículo 10 - Cuantía variable
+    # Artículo 11 - Cantidades de las cuantías
+def extract_cuantías(text):
+    pass # TODO
+
+# Capítulo V Articulo 22 - 24 
+def extract_requisitos_grado_universidad(text):
+    pass # TODO
+
+# Capítulo V Articulo 28 - 30 
+def extract_requisitos_master(text):
+    pass # TODO
+
+# Capítulo V Articulo 33
+def extract_requisitos_grado_superior(text):
+    pass # TODO
+
+# Capítulo V Articulo 34
+def extract_requisitos_bachiller(text):
+    pass # TODO
+
+# Capítulo V Articulo 36
+def extract_requisitos_ciclo_medio(text):
+    pass # TODO
+
 def main():
     for filename in CORPUS:
         pdf = preprocess_pdf(filename)
 
         info = extraction_pipeline(
             ("umbrales renta", pdf["IV"]["articles"]["19"]["content"], extract_umbrales),
+            ("deducciones renta", pdf["IV"]["articles"]["18"]["content"], extract_deducciones),
             ("plazos solicitud", pdf["VII"]["articles"]["48"]["content"], extract_plazos),
         )
 
         os.makedirs('information_extraction/results', exist_ok=True)
         with open(f'information_extraction/results/{filename}.json', 'w', encoding='utf-8') as f:
             json.dump(info, f, ensure_ascii=False, indent=2)
+            
 main()

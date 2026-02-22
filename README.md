@@ -27,8 +27,27 @@ Examples of fields:
 4. Abstractive summary generation  
 
 ## Installation
+### Project
 ```bash
 git clone https://github.com/forteaj/summaryProject.git
 cd summaryProject
 pip install -r requirements.txt
+```
 
+### Ollama
+```bash
+# 1) Install Ollama
+# Linux / MacOS
+curl -fsSL https://ollama.com/install.sh | sh
+# Windows
+irm https://ollama.com/install.ps1 | iex
+
+# 2) Pull the model (example: Qwen)
+ollama pull qwen2.5:7b
+```
+
+## Usage
+### Information Extraction
+```bash
+python -m information_extraction.extraction
+```
