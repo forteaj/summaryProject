@@ -2,11 +2,8 @@ import fitz
 import json
 import os
 import re
-from pathlib import Path
 
-from information_extraction.globals import CLEAN_PATTERNS, STRUCTURE_PATTERNS
-
-ROOT = Path(__file__).resolve().parent.parent
+from information_extraction.globals import CLEAN_PATTERNS, STRUCTURE_PATTERNS, ROOT
 
 def remove_page_numbers(text):
     lines = text.strip().split("\n")

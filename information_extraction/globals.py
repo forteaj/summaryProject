@@ -1,4 +1,9 @@
 import re
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+
+MODEL = "qwen2.5:7b"
 
 CORPUS = [
     'ayudas_21-22', 

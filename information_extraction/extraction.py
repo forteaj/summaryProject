@@ -5,7 +5,7 @@ import requests
 from typing import Callable, Dict, Any, List, Tuple
 from typing import Dict, Any, Optional
 
-from information_extraction.globals import CORPUS, DATE_PATTERN, LLM_ENDPOINT
+from information_extraction.globals import CORPUS, DATE_PATTERN, LLM_ENDPOINT, MODEL
 from information_extraction.preprocessing import preprocess_pdf
 from information_extraction.util import iso
 
@@ -112,7 +112,7 @@ def extract_plazos(text):
 
     return result
 
-def get_json_from_prompt(prompt, model="qwen2.5:7b"):
+def get_json_from_prompt(prompt, model=MODEL):
     response = requests.post(
         LLM_ENDPOINT,
         json={
