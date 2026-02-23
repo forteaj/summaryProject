@@ -167,7 +167,36 @@ def extract_deducciones(text):
 
 # Capítulo VII Articulo 55 
 def extract_compatibilidad(text):
-    pass # TODO
+    prompt = f"""
+    You are an information extraction system.
+
+    Extract scholarship compatibility rules from the Spanish text below and return ONLY valid JSON.
+    Do not explain anything.
+    Do not include markdown.
+
+    Return exactly this JSON schema:
+    {{
+      "incompatible": [],
+      "compatible": [],
+      "compatibilidad_condicionada": [
+        {{"item": "", "condicion": ""}}
+      ],
+      "consecuencia": ""
+    }}
+
+    Rules:
+    - If something is not mentioned, use [] or "".
+    - Do NOT invent anything.
+    - "incompatible" should include general incompatibilities.
+    - "compatible" should include explicitly compatible items (e.g. ayudas complementarias, Erasmus, Becas-Colaboración).
+    - Put MUFACE under "compatibilidad_condicionada" with the "excepto..." condition.
+
+    Text:
+    {text}
+
+    Output:
+    """
+    return get_json_from_prompt(prompt)
 
 # Capítulo VI Articulo 40 
 def extract_obligaciones(text):
@@ -217,6 +246,7 @@ def main():
             ("umbrales renta", pdf["IV"]["articles"]["19"]["content"], extract_umbrales),
             ("deducciones renta", pdf["IV"]["articles"]["18"]["content"], extract_deducciones),
             ("plazos solicitud", pdf["VII"]["articles"]["48"]["content"], extract_plazos),
+            ("compatibilidad becas", pdf["VII"]["articles"]["55"]["content"], extract_compatibilidad),
         )
 
         os.makedirs('information_extraction/results', exist_ok=True)
