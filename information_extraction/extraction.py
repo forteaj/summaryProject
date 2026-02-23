@@ -200,7 +200,32 @@ def extract_compatibilidad(text):
 
 # Capítulo VI Articulo 40 
 def extract_obligaciones(text):
-    pass # TODO
+    prompt = f"""
+    You are an information extraction system.
+
+    Extract the obligations of scholarship beneficiaries from the Spanish text below and return ONLY valid JSON.
+    Do not explain anything.
+    Do not include markdown.
+
+    Return exactly this JSON schema:
+    {{
+      "obligaciones": [
+        {{"id": "", "descripcion": ""}}
+      ]
+    }}
+
+    Rules:
+    - Each obligation should be one item in the list.
+    - "id" should be the letter label if present (e.g., "a", "b", ...). If not present, use "".
+    - "descripcion" should be a short sentence in Spanish summarizing the obligation.
+    - Do NOT invent obligations not present in the text.
+
+    Text:
+    {text}
+
+    Output:
+    """
+    return get_json_from_prompt(prompt)
 
 # Capítulo III Articulo 15 
 def extract_requisitos(text):
@@ -247,6 +272,7 @@ def main():
             ("deducciones renta", pdf["IV"]["articles"]["18"]["content"], extract_deducciones),
             ("plazos solicitud", pdf["VII"]["articles"]["48"]["content"], extract_plazos),
             ("compatibilidad becas", pdf["VII"]["articles"]["55"]["content"], extract_compatibilidad),
+            ("obligaciones beneficiarios", pdf["VI"]["articles"]["40"]["content"], extract_obligaciones),
         )
 
         os.makedirs('information_extraction/results', exist_ok=True)
