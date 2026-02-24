@@ -7,7 +7,7 @@ from typing import Dict, Any, Optional
 
 from information_extraction.globals import CORPUS, DATE_PATTERN, LLM_ENDPOINT, MODEL
 from information_extraction.preprocessing import preprocess_pdf
-from information_extraction.util import iso
+from information_extraction.util import *
 
 """
 Function to extract different information from text.
@@ -17,11 +17,11 @@ Parameters:
         text - The text to extract information from. Usually a specific article of the PDF to process, as the structure is mostly similar across samples.
         function - The extraction function to apply to the text. Should return a string or a dictionary.
 """
-def extraction_pipeline(*tasks: Tuple[str, str, Callable[[str], Any]]) -> Dict[str, Any]:
+def extraction_pipeline(*tasks: Tuple[str, Any, Callable[[Any], Any]]) -> Dict[str, Any]:
     info = {}
 
     for key, text, function in tasks:
-        text = re.sub('\n', '', text)
+        print(f'Step: {key}')
         info[key] = function(text)
 
     return info
@@ -30,6 +30,8 @@ def extraction_pipeline(*tasks: Tuple[str, str, Callable[[str], Any]]) -> Dict[s
 Template-based approach for extracting salary thresholds (umbrales) from a specific text. 
 """
 def extract_umbrales(text):
+    text = re.sub('\n', '', text)
+
     result = {
         "umbral 1": {},
         "umbral 2": {},
@@ -76,6 +78,7 @@ def extract_plazos(text):
         
         return "hasta" # Default to "hasta"
 
+    text = re.sub('\n', '', text)
     result = {
         "universitario": {"desde": None, "hasta": None},
         "no universitario": {"desde": None, "hasta": None},
@@ -119,7 +122,7 @@ def get_json_from_prompt(prompt, model=MODEL):
             "model": model,
             "prompt": prompt,
             "stream": False,
-            "keep_alive": "0m",
+            "keep_alive": "30s",
             "options": {
                 "temperature": 0
             }
@@ -138,6 +141,7 @@ def get_json_from_prompt(prompt, model=MODEL):
 LLM-based approach for extracting deductions from a specific text. 
 """
 def extract_deducciones(text):
+    text = re.sub('\n', '', text)
     prompt = f"""
     You are an information extraction system.
 
@@ -165,8 +169,8 @@ def extract_deducciones(text):
 
     return get_json_from_prompt(prompt)
 
-# Capítulo VII Articulo 55 
 def extract_compatibilidad(text):
+    text = re.sub('\n', '', text)
     prompt = f"""
     You are an information extraction system.
 
@@ -198,8 +202,8 @@ def extract_compatibilidad(text):
     """
     return get_json_from_prompt(prompt)
 
-# Capítulo VI Articulo 40 
 def extract_obligaciones(text):
+    text = re.sub('\n', '', text)
     prompt = f"""
     You are an information extraction system.
 
@@ -225,23 +229,78 @@ def extract_obligaciones(text):
 
     Output:
     """
+
     return get_json_from_prompt(prompt)
 
 # Capítulo III Articulo 15 
 def extract_requisitos(text):
     pass # TODO
 
-# Capítulo II Articulos 4 - 11 (concat texts?)
-    # Artículo 4 - Clases (introducción)
-    # Artículo 5 - Beca matrícula
-    # Artículo 6 - Cuantía fija
-    # Artículo 7 - Cuantía residencia
-    # Artículo 8 - Cuantía excelencia
-    # Artículo 9 - Beca básica
-    # Artículo 10 - Cuantía variable
-    # Artículo 11 - Cantidades de las cuantías
-def extract_cuantías(text):
-    pass # TODO
+def extract_cuantias(articles):
+    init_text = re.sub('\n', '', articles["4"]['content'])
+    prompt_init = f"""
+    You are an information extraction system that returns only JSON.
+
+    Extract the information asked for in the JSON schema from the Spanish text below and return ONLY valid JSON.
+
+    Text:
+    {init_text}
+
+    Return EXACTLY this type of JSON schema:
+    {{[
+        "<clase>": null,
+    ]}}
+
+    Rules:
+    - Do NOT explain anything.
+    - Do NOT include markdown.
+    - DO NOT add additional fields.
+    - Only return a valid JSON
+    - <clase> should be replaced to each class the text. 
+    - There is a total of 6 classes.
+    Output:
+    {{
+    """
+
+    result = get_json_from_prompt(prompt_init)
+    
+    for cuantia, article in zip(result.keys(), range(5,11)):
+        iter_text = articles[str(article)]['content']
+        prompt_iter = f"""
+        You are an information extraction system that returns only JSON.
+
+        Extract the information asked for in the JSON schema from the Spanish text below about {cuantia} and return ONLY valid JSON.
+
+        Text:
+        {iter_text + articles['11']['content']}
+
+        Return EXACTLY this type of JSON schema:
+        {{
+            {{
+                "beneficiarios": "",
+                "cantidad": "",
+                "umbral": 0,
+                "detalles": ""
+            }},
+        }}
+
+        Rules:
+        - Do NOT explain anything.
+        - Do NOT include any markdown. Return raw JSON.
+        - DO NOT add additional fields.
+        - Only return a valid JSON
+        - "beneficiarios" refers to the group or groups of people that can benefit from this.
+        - Only include the amount related to {cuantia} for the "cantidad" key. Use the correct decimal JSON format. If no amount is available for that class, an explicative string may be included instead of the amount.
+        - "umbral" must ALWAYS take values between 1, 2 and 3. This information is always present in the text.
+        - "detalles" should include a brief description of additional relevant information, such as exceptions or special requirements. Do not repeat information included in "beneficiarios", "cantidad" or "umbral". 
+        Output:
+        {{
+        """
+
+        result[cuantia] = get_json_from_prompt(prompt_iter)
+    
+    return result
+    
 
 # Capítulo V Articulo 22 - 24 
 def extract_requisitos_grado_universidad(text):
@@ -268,9 +327,10 @@ def main():
         pdf = preprocess_pdf(filename)
 
         info = extraction_pipeline(
+            ("plazos solicitud", pdf["VII"]["articles"]["48"]["content"], extract_plazos),
+            ("cuantias", pdf["II"]["articles"], extract_cuantias), #concat_articles(pdf, "II", range(4, 12))
             ("umbrales renta", pdf["IV"]["articles"]["19"]["content"], extract_umbrales),
             ("deducciones renta", pdf["IV"]["articles"]["18"]["content"], extract_deducciones),
-            ("plazos solicitud", pdf["VII"]["articles"]["48"]["content"], extract_plazos),
             ("compatibilidad becas", pdf["VII"]["articles"]["55"]["content"], extract_compatibilidad),
             ("obligaciones beneficiarios", pdf["VI"]["articles"]["40"]["content"], extract_obligaciones),
         )
@@ -278,5 +338,6 @@ def main():
         os.makedirs('information_extraction/results', exist_ok=True)
         with open(f'information_extraction/results/{filename}.json', 'w', encoding='utf-8') as f:
             json.dump(info, f, ensure_ascii=False, indent=2)
-            
+        
+        return
 main()

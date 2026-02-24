@@ -20,3 +20,13 @@ def iso(date):
         dt = datetime(year, month, day, 0, 0)
     
     return dt.strftime("%Y-%m-%dT%H:%M")
+
+def concat_articles(pdf, chapter, article_range):
+    text = ""
+
+    for article_num in article_range:
+        article_str = str(article_num)
+        article = pdf[chapter]["articles"][article_str]
+        text += f"Artículo {article_str}. {article['title']}\n{article['content']}\n\n"
+    
+    return text
