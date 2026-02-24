@@ -1,35 +1,34 @@
- **Solicitud de Beca de Estudio**
+# REQUISITOS GENERALES
 
-**1. Umbrales de Renta**
+ **Requisitos Generales para Solicitantes**
 
-La solicitud de beca de estudio se aplica a los solicitantes cuyo ingreso familiar se encuentre por encima de ciertos umbrales, según la siguiente tabla:
+1. **Elegibilidad económica**
+   - El solicitante debe tener un ingreso familiar anual que no supera los umbrales establecidos en cada categoría, según la cantidad de miembros computables en su familia. Los umbrales son:
+     - Umbral 1: hasta 8422€ (para 1 miembro), 12632€ (para 2 miembros), 16843€ (para 3 miembros), etc., hasta un máximo de 34529€ (para 8 miembros).
+     - Umbral 2: hasta 13236€ (para 1 miembro), 22594€ (para 2 miembros), etc., hasta un máximo de 50333€ (para 8 miembros).
+     - Umbral 3: hasta 14112€ (para 1 miembro), 24089€ (para 2 miembros), etc., hasta un máximo de 53665€ (para 8 miembros).
+   - En caso de tener más de 8 miembros en la familia, se aplicará un incremento por cada miembro adicional.
 
-| Umbral | Ingreso (euros) |
-|--------|-----------------|
-| Umbral 1 | [8422, 12632, 16843, 21054, 24423, 27791, 31160, 34529, 37911] |
-| Umbral 2 | [13236, 22594, 30668, 36421, 40708, 43945, 47146, 50333, 53665] |
-| Umbral 3 | [14112, 24089, 32697, 38831, 43402, 46853, 50267, 53665, 56956] |
+2. **Deducciones económicas**
+   - El solicitante puede beneficiarse de diversas deducciones en su renta familiar, según las siguientes condiciones:
+     - Un 50% de los ingresos aportados por cualquier miembro computable de la familia distinto de los sustentadores principales.
+     - 525€ por cada hermano que conviva en el domicilio familiar, incluyendo al solicitante.
+     - 800€ por cada hermano que convive en el domicilio familiar, incluyendo al solicitante.
+     - Una deducción de 2000€ para el solicitante universitario cuando está afectado de una discapacidad de grado igual o superior al sesenta y cinco por ciento.
+     - 1811€ por cada hermano o hijo del solicitante o el propio solicitante que esté afectado de discapacidad, legalmente calificada, de grado igual o superior al treinta y tres por ciento.
+     - 2881€ por cada hermano o hijo del solicitante o el propio solicitante que esté afectado de discapacidad, legalmente calificada, de grado igual o superior al sesenta y cinco por ciento.
+     - 1176€ por cada hermano del solicitante o el propio solicitante menor de 25 años que curse estudios universitarios y resida fuera del domicilio familiar, cuando sean dos o más los estudiantes con residencia fuera del domicilio familiar por razón de estudios universitarios.
+     - Un 20% de la renta familiar cuando el solicitante sea huérfano absoluto y menor de 25 años.
+     - 500€ por pertenecer a una familia monoparental.
 
-En caso de tener miembros adicionales al octavo en el hogar familiar, se aplicará un incremento de [3368, 3181, 3391] euros según el umbral correspondiente.
+3. **Plazos para presentar la solicitud**
+   - La fecha límite para presentar la solicitud varía según el tipo de beca:
+     - Beca para estudiantes universitarios: desde el 15 de octubre hasta el 14 de octubre del año siguiente.
+     - Beca no universitaria: desde el 1 de septiembre hasta el 30 de septiembre del año actual.
+     - Excepciones: se aceptan solicitudes fuera de plazo en determinados casos, desde el 1 de octubre al 31 de diciembre del año actual.
 
-**2. Deducciones de Renta**
+---
 
-La solicitud de beca de estudio también contempla diversas deducciones en la renta familiar:
+# RESUMEN DEL DOCUMENTO
 
-- El 50% de los ingresos aportados por cualquier miembro computable de la familia distinto de los sustentadores principales.
-- 525 euros por cada hermano que conviva en el domicilio familiar, incluyendo al solicitante.
-- 800 euros por cada hermano que convive en el domicilio familiar, incluyendo al solicitante.
-- 2000 euros para el solicitante universitario cuando esté afectado de una discapacidad de grado igual o superior al sesenta y cinco por ciento.
-- 1811 euros por cada hermano o hijo del solicitante o el propio solicitante que esté afectado de discapacidad, legalmente calificada, de grado igual o superior al treinta y tres por ciento.
-- 2881 euros por cada hermano o hijo del solicitante o el propio solicitante que esté afectado de discapacidad, legalmente calificada, de grado igual o superior al sesenta y cinco por ciento.
-- 1176 euros por cada hermano del solicitante o el propio solicitante menor de 25 años que cursa estudios universitarios y reside fuera del domicilio familiar, cuando sean dos o más los estudiantes con residencia fuera del domicilio familiar por razón de estudios universitarios.
-- El 20% de la renta familiar cuando el solicitante sea huérfano absoluto y menor de 25 años.
-- 500 euros por pertenecer al solicitante a una familia monoparental.
-
-**3. Plazos de Solicitud**
-
-La fecha de inicio para la solicitud de beca de estudio varía según el perfil del solicitante:
-
-- Para estudiantes universitarios, la fecha de inicio es hasta el 14 de octubre de 2021.
-- Para no estudiantes universitarios, la fecha de inicio es hasta el 30 de septiembre de 2021.
-- Excepciones a estos plazos pueden ser consideradas hasta el 31 de diciembre de 2021.
+ Este documento establece los umbrales de ingresos y las deducciones permitidas para el beneficio familiar en tres categorías diferentes, basadas en el número de miembros computables de la familia. Los umbrales de ingresos proporcionados son un conjunto de límites de ingresos anuales que determinan la cantidad de deducciones permitidas. Las deducciones incluyen una variedad de tipos, como porcentajes del ingreso familiar y cantidades fijas en euros, y se aplican a diferentes situaciones familiares, como la presencia de discapacitados o estudiantes universitarios. El documento también establece plazos específicos para la solicitud del beneficio familiar, con fechas de inicio y fin diferentes según si el solicitante es un estudiante universitario o no.
