@@ -246,8 +246,7 @@ def extract_requisitos(text):
       ],
       "excepciones": [
         {{"relacionado_con": "", "descripcion": ""}}
-      ],
-      "fecha_referencia": ""
+      ]
     }}
 
     Rules:
@@ -308,6 +307,7 @@ def extract_requisitos_grado_universidad(text):
         "porcentajes_por_rama": [],
         "reglas": []
       }}
+      
     }}
 
     Rules:
