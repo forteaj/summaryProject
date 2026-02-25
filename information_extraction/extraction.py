@@ -198,7 +198,7 @@ def extract_compatibilidad(text):
     """
     return get_json_from_prompt(prompt)
 
-# Capítulo VI Articulo 40 
+# Capítulo VI Articulo 40
 def extract_obligaciones(text):
     prompt = f"""
     You are an information extraction system.
@@ -227,9 +227,46 @@ def extract_obligaciones(text):
     """
     return get_json_from_prompt(prompt)
 
-# Capítulo III Articulo 15 
+# Capítulo III Articulo 15  GENERALES
 def extract_requisitos(text):
-    pass # TODO
+    prompt = f"""
+    You are an information extraction system.
+
+    Extract the general scholarship requirements from the Spanish legal text below.
+
+    Return ONLY valid JSON.
+    Do not explain anything.
+    Do not include markdown.
+
+    Use EXACTLY this JSON schema:
+
+    {{
+      "requisitos": [
+        {{"id": "", "descripcion": ""}}
+      ],
+      "excepciones": [
+        {{"relacionado_con": "", "descripcion": ""}}
+      ],
+      "fecha_referencia": ""
+    }}
+
+    Rules:
+    - Extract each requirement (a, b, c, d...) as one item in "requisitos".
+    - "id" should be the letter label (e.g. "a", "b"...).
+    - "descripcion" must be a short sentence in Spanish summarizing the requirement.
+    - Extract ALL explicit exceptions into "excepciones".
+    - "relacionado_con" should reference the requirement id if applicable.
+    - Do NOT invent anything.
+    - If no exceptions exist, return [].
+    - Extract the reference date if mentioned (e.g. "31 de diciembre de 2020").
+    - If no date exists, return "".
+
+    Text:
+    {text}
+
+    Output:
+    """
+    return get_json_from_prompt(prompt)
 
 # Capítulo II Articulos 4 - 11 (concat texts?)
     # Artículo 4 - Clases (introducción)
@@ -245,7 +282,47 @@ def extract_cuantías(text):
 
 # Capítulo V Articulo 22 - 24 
 def extract_requisitos_grado_universidad(text):
-    pass # TODO
+    prompt = f"""
+    You are an information extraction system.
+
+    Extract ONLY the academic requirements and evaluation rules 
+    for UNIVERSITY DEGREE (GRADO) students from the Spanish legal text below.
+
+    Return ONLY valid JSON.
+    Do not explain anything.
+    Do not include markdown.
+
+    Use EXACTLY this JSON schema:
+
+    {{
+      "nota_media": {{
+        "escala": "",
+        "reglas": []
+      }},
+      "matricula": {{
+        "creditos_tiempo_completo": "",
+        "creditos_matricula_parcial": "",
+        "reglas": []
+      }},
+      "rendimiento": {{
+        "porcentajes_por_rama": [],
+        "reglas": []
+      }}
+    }}
+
+    Rules:
+    - Extract ONLY information applicable to university GRADO students.
+    - Do NOT include information from other educational levels.
+    - Summarize rules into short Spanish sentences.
+    - Do NOT invent anything.
+    - If a field is not mentioned, use "" or [].
+
+    Text:
+    {text}
+
+    Output:
+    """
+    return get_json_from_prompt(prompt)
 
 # Capítulo V Articulo 28 - 30 
 def extract_requisitos_master(text):
@@ -264,6 +341,7 @@ def extract_requisitos_ciclo_medio(text):
     pass # TODO
 
 def main():
+
     for filename in CORPUS:
         pdf = preprocess_pdf(filename)
 
@@ -273,6 +351,11 @@ def main():
             ("plazos solicitud", pdf["VII"]["articles"]["48"]["content"], extract_plazos),
             ("compatibilidad becas", pdf["VII"]["articles"]["55"]["content"], extract_compatibilidad),
             ("obligaciones beneficiarios", pdf["VI"]["articles"]["40"]["content"], extract_obligaciones),
+            ("requisitos generales", pdf["III"]["articles"]["15"]["content"], extract_requisitos),
+            ("requisitos grado universidad", pdf["V"]["articles"]["22"]["content"],extract_requisitos_grado_universidad),
+            ("requisitos grado universidad", pdf["V"]["articles"]["23"]["content"],extract_requisitos_grado_universidad),
+            ("requisitos grado universidad", pdf["V"]["articles"]["24"]["content"],extract_requisitos_grado_universidad),
+
         )
 
         os.makedirs('information_extraction/results', exist_ok=True)
