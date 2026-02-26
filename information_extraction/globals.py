@@ -3,7 +3,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 
-MODEL = "qwen2.5:7b"
+#MODEL = "qwen2.5:7b"
+
+MODEL = "mistral:7b-instruct"
 
 CORPUS = [
     'ayudas_21-22', 

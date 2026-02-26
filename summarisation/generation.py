@@ -46,8 +46,10 @@ def main():
         summary = generate_summary(filename)
         print(summary)
 
-        os.makedirs('summarisation/results', exist_ok=True)
-        with open(ROOT / 'summarisation' / 'results' / MODEL.replace(":", "_") / '{filename}.md', 'w', encoding='utf-8') as f:
+        output_dir = ROOT / 'summarisation' / 'results' / MODEL.replace(":", "_")
+        os.makedirs(output_dir, exist_ok=True)
+
+        with open(output_dir / f'{filename}.md', 'w', encoding='utf-8') as f:
             f.write(summary)
 
 main()

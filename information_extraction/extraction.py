@@ -234,7 +234,43 @@ def extract_obligaciones(text):
 
 # Capítulo III Articulo 15 
 def extract_requisitos(text):
-    pass # TODO
+    prompt = f"""
+    You are an information extraction system.
+
+    Extract the general scholarship requirements from the Spanish legal text below.
+
+    Return ONLY valid JSON.
+    Do not explain anything.
+    Do not include markdown.
+
+    Use EXACTLY this JSON schema:
+
+    {{
+      "requisitos": [
+        {{"id": "", "descripcion": ""}}
+      ],
+      "excepciones": [
+        {{"relacionado_con": "", "descripcion": ""}}
+      ]
+    }}
+
+    Rules:
+    - Extract each requirement (a, b, c, d...) as one item in "requisitos".
+    - "id" should be the letter label (e.g. "a", "b"...).
+    - "descripcion" must be a short sentence in Spanish summarizing the requirement.
+    - Extract ALL explicit exceptions into "excepciones".
+    - "relacionado_con" should reference the requirement id if applicable.
+    - Do NOT invent anything.
+    - If no exceptions exist, return [].
+    - Extract the reference date if mentioned (e.g. "31 de diciembre de 2020").
+    - If no date exists, return "".
+
+    Text:
+    {text}
+
+    Output:
+    """
+    return get_json_from_prompt(prompt)
 
 def extract_cuantias(articles):
     init_text = re.sub('\n', '', articles["4"]['content'])
@@ -333,6 +369,7 @@ def main():
             ("deducciones renta", pdf["IV"]["articles"]["18"]["content"], extract_deducciones),
             ("compatibilidad becas", pdf["VII"]["articles"]["55"]["content"], extract_compatibilidad),
             ("obligaciones beneficiarios", pdf["VI"]["articles"]["40"]["content"], extract_obligaciones),
+            ("requisitos generales", pdf["III"]["articles"]["15"]["content"], extract_requisitos)
         )
 
         os.makedirs('information_extraction/results', exist_ok=True)
