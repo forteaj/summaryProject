@@ -21,7 +21,7 @@ def extraction_pipeline(*tasks: Tuple[str, Any, Callable[[Any], Any]]) -> Dict[s
     info = {}
 
     for key, text, function in tasks:
-        print(f'Step: {key}')
+        print(f'    Step: {key}')
         info[key] = function(text)
 
     return info
@@ -169,6 +169,9 @@ def extract_deducciones(text):
 
     return get_json_from_prompt(prompt)
 
+"""
+LLM-based approach for extracting compatibilities with other scholarships from a specific text. 
+"""
 def extract_compatibilidad(text):
     text = re.sub('\n', '', text)
     prompt = f"""
@@ -202,6 +205,9 @@ def extract_compatibilidad(text):
     """
     return get_json_from_prompt(prompt)
 
+"""
+LLM-based approach for extracting obligations from a specific text. 
+"""
 def extract_obligaciones(text):
     text = re.sub('\n', '', text)
     prompt = f"""
@@ -232,6 +238,9 @@ def extract_obligaciones(text):
 
     return get_json_from_prompt(prompt)
 
+"""
+LLM-based approach for extracting general requirements for a grant from a specific text. 
+"""
 def extract_requisitos_generales(text):
     prompt = f"""
     You are an information extraction system.
@@ -269,6 +278,9 @@ def extract_requisitos_generales(text):
     """
     return get_json_from_prompt(prompt)
 
+"""
+LLM-based approach for extracting monetary amounts from a collection of texts. 
+"""
 def extract_cuantias(articles):
     init_text = re.sub('\n', '', articles["4"]['content'])
     prompt_init = f"""
@@ -334,7 +346,9 @@ def extract_cuantias(articles):
     
     return result
     
-# Capítulo V Articulo 22 - 24 
+"""
+LLM-based approach for extracting academic requirements from a collection of texts. 
+"""
 def extract_requisitos_academicos(articles):
     result = {
         "grado universitario": None,
@@ -395,6 +409,7 @@ def extract_requisitos_academicos(articles):
 
 def main():
     for filename in CORPUS:
+        print("Processing", filename)
         pdf = preprocess_pdf(filename)
 
         info = extraction_pipeline(

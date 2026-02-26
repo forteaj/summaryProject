@@ -1,4 +1,130 @@
 {
+  "plazos solicitud": {
+    "universitario": {
+      "desde": "2025-03-24T08:00",
+      "hasta": "2025-05-14T15:00"
+    },
+    "no universitario": {
+      "desde": "2025-03-24T08:00",
+      "hasta": "2025-05-14T15:00"
+    },
+    "excepciones": {
+      "desde": null,
+      "hasta": "2025-12-31T00:00"
+    }
+  },
+  "requisitos generales": {
+    "requisitos": [
+      {
+        "id": "a",
+        "descripcion": "No estar en posesión del título oficial correspondiente a los estudios para los que se solicita la beca a fecha 30 de septiembre de 2025, salvo determinados casos."
+      },
+      {
+        "id": "b",
+        "descripcion": "Cumplir con los requisitos básicos establecidos en los Real Decretos 1721/2007 y 163/2025."
+      },
+      {
+        "id": "c",
+        "descripcion": "Estar matriculado en enseñanzas del sistema educativo español enumeradas en el artículo 3 de la Resolución."
+      },
+      {
+        "id": "d",
+        "descripcion": "Ser ciudadano español o poseer nacionalidad de un Estado miembro de la Unión Europea, con excepciones para residentes permanentes y trabajadores por cuenta propia o ajena."
+      }
+    ],
+    "excepciones": [
+      {
+        "relacionado_con": "d",
+        "descripcion": "Los solicitantes de estatuto de refugiado o protección subsidiaria podrán obtener el permiso de residencia legal hasta el 30 de junio de 2025."
+      },
+      {
+        "relacionado_con": "",
+        "descripcion": "No se requerirá cumplir con los requisitos básicos para la obtención de la beca de matrícula."
+      }
+    ]
+  },
+  "requisitos academicos": {
+    "grado universitario": {
+      "creditos": {
+        "matricula completa": "60 créditos",
+        "matricula parcial": "entre 30 y 59 créditos"
+      },
+      "rendimiento anterior": {
+        "primer curso": "",
+        "posteriores cursos": "superar en los últimos estudios cursados el porcentaje de créditos establecido según la rama o área de conocimiento: Artes y Humanidades (90%), Ciencias (65%), Ciencias Sociales y Jurídicas (90%), Ciencias de la Salud (80%), Ingeniería o Arquitectura/ enseñanzas técnicas (65%)"
+      },
+      "nota media": {
+        "escala": "0 a 10",
+        "formula": "V = P x NCa / NCt"
+      },
+      "detalles": "Las prácticas externas curriculares y los trabajos, proyectos o exámenes de fin de grado se contabilizarán como asignaturas con los créditos que tengan asignados y con la calificación obtenida por el estudiante. Las asignaturas y créditos reconocidos, convalidados, adaptados y transferidos no se tendrán en cuenta a los efectos del cumplimiento de los requisitos académicos establecidos en esta convocatoria."
+    },
+    "master": {
+      "creditos": {
+        "matricula completa": "60",
+        "matricula parcial": "30-59"
+      },
+      "rendimiento anterior": {
+        "primer curso": "5,00 puntos (1,17 veces las notas de estudios técnicos)",
+        "posteriores cursos": "Nota media del primer curso y superación total de créditos matriculados en el primer curso"
+      },
+      "nota media": {
+        "escala": "0 a 10",
+        "formula": "Para primer curso: Suma de puntuaciones dividida por número de asignaturas. Para segundo curso: Calificación del curso anterior, incluyendo complementos formativos."
+      },
+      "detalles": "Estudiantes con discapacidad >65% pueden reducir carga lectiva hasta 50%. Estudiantes sin Grado pueden optar si tienen la titulación a 31/12/2025. Prácticas, trabajos y exámenes de fin de grado se consideran en cálculo."
+    },
+    "no universitario": {
+      "creditos": {},
+      "rendimiento_anterior": {
+        "primer_curso": "",
+        "posteriores_cursos": "2,50 puntos"
+      },
+      "nota_media": {
+        "escala": "0 a 10",
+        "formula": ""
+      },
+      "detalles": "Las asignaturas no presentadas se valorarán con 2,50 puntos. En el caso de los alumnos que accedan directamente desde cualquier ciclo de formación profesional a unas enseñanzas no universitarias de nivel superior, la nota media será la calificación final del ciclo formativo correspondiente desde el que se accede."
+    }
+  },
+  "cuantias": {
+    "Beca_de_matrícula": {
+      "beneficiarios": "solicitantes que cursen enseñanzas y artísticas superiores y enseñanzas universitarias",
+      "cantidad": 0.0,
+      "umbral": 3,
+      "detalles": "La cuantía de la beca de matrícula cubrirá el importe de los créditos de que se haya matriculado el estudiante por primera vez en el curso 2025-2026, con exclusión de los que se formalicen para segunda y posteriores matrículas. El importe será el del precio público oficial que se fije en el curso 2025-2026 para los servicios académicos."
+    },
+    "Cuantía_fija_ligada_a_la_renta_del_estudiante": {
+      "beneficiarios": "quienes cursen en régimen presencial y de matrícula completa o en régimen semipresencial y de matrícula completa los estudios enumerados en las letras a) a e) del artículo 3.1 y en las letras a) y b) del artículo 3.2 de esta Resolución",
+      "cantidad": 1700.0,
+      "umbral": 1,
+      "detalles": "Se aplica el umbral 1 de renta familiar establecido en esta Resolución."
+    },
+    "Cuantía_fija_ligada_a_la_residencia_del_estudiante_durante_el_curso_escolar": {
+      "beneficiarios": "quienes cursen en régimen presencial y de matrícula completa o en régimen semipresencial y de matrícula completa los estudios enumerados en las letras a) a e) del artículo 3.1 y en la letra a) y b) del artículo 3.2 de esta Resolución.",
+      "cantidad": 2700.0,
+      "umbral": 2,
+      "detalles": "Se requerirá que el solicitante acredite la necesidad de residir fuera del domicilio familiar durante todo el curso escolar, por razón de la distancia entre el mismo y el centro docente en que se encuentra matriculado, los medios de comunicación existentes y los horarios lectivos. Se considerará como domicilio familiar el más próximo al centro docente del que sea titular o en el que resida de forma habitual algún miembro computable de la unidad familiar, aunque no coincida con el domicilio legal del solicitante."
+    },
+    "Cuantía_fija_ligada_a_la_excellencia_en_el_rendimiento_académico": {
+      "beneficiarios": "quienes cursen en régimen de matrícula completa los estudios enumerados en las letras a) a e) del artículo 3.1 y en la letra a) y b) del artículo 3.2 de esta Resolución",
+      "cantidad": 0,
+      "umbral": 3,
+      "detalles": "El cómputo de la nota media se realizará conforme al procedimiento establecido en los artículos 22, 30 y 32 de esta Resolución incluyendo las calificaciones correspondientes a asignaturas o créditos no superados, si los hubiere. Para la adjudicación de esta cuantía, a la calificación a tener en cuenta en el caso de los estudiantes matriculados en segundos y posteriores cursos de grado y a los de primer curso de máster, se le aplicará un coeficiente corrector de 1,17 para las calificaciones procedentes de estudios del área de arquitectura e ingeniería, de 1,11 para las procedentes de estudios del área de ciencias y de 1,05 para las procedentes del área de ciencias de la salud."
+    },
+    "Beca_básica": {
+      "beneficiarios": "solicitantes que cursen enseñanzas no universitarias reguladas en el artículo 3.1.",
+      "cantidad": 300.0,
+      "umbral": 3,
+      "detalles": "Esta cuantía será de 350 euros para los becarios que cursen Ciclos Formativos de Grado Básico."
+    },
+    "Cuantía_variable": {
+      "beneficiarios": "solicitantes que cursen tanto enseñanzas universitarias como no universitarias, con excepciones para estudios íntegramente no presenciales y otros casos específicos.",
+      "cantidad": 60.0,
+      "umbral": 2,
+      "detalles": "La cuantía variable mínima se establece en 60,00 euros."
+    }
+  },
   "umbrales renta": {
     "umbral 1": {
       "1": 8843,
@@ -86,18 +212,55 @@
       "descripcion": "500,00 euros por pertenecer el solicitante a una familia monoparental"
     }
   ],
-  "plazos solicitud": {
-    "universitario": {
-      "desde": "2025-03-24T08:00",
-      "hasta": "2025-05-14T15:00"
-    },
-    "no universitario": {
-      "desde": "2025-03-24T08:00",
-      "hasta": "2025-05-14T15:00"
-    },
-    "excepciones": {
-      "desde": null,
-      "hasta": "2025-12-31T00:00"
-    }
+  "compatibilidad becas": {
+    "incompatible": [
+      "más de una beca de las convocadas por esta resolución",
+      "beneficios de la misma finalidad que puedan recibirse de otras entidades o personas públicas o privadas",
+      "gastos educativos pagados por cualquier persona o entidad que no sea miembro computable de la unidad familiar"
+    ],
+    "compatible": [
+      "becas o ayudas complementarias establecidas por administraciones públicas en sus respectivos ámbitos de competencia",
+      "Becas-Colaboración convocadas por el Ministerio de Educación, Formación Profesional y Deportes",
+      "becas Erasmus, Tempus y otras de análoga naturaleza"
+    ],
+    "compatibilidad_condicionada": [
+      {
+        "item": "bajas MUFACE",
+        "condicion": "excepto la cuantía ligada a la residencia"
+      }
+    ],
+    "consecuencia": "reintegro"
+  },
+  "obligaciones beneficiarios": {
+    "obligaciones": [
+      {
+        "id": "a",
+        "descripcion": "Destinar la beca a la matriculación, asistencia a clase y superación de asignaturas o créditos."
+      },
+      {
+        "id": "b",
+        "descripcion": "Acreditar ante la entidad concedente el cumplimiento de los requisitos y condiciones para obtener la beca."
+      },
+      {
+        "id": "c",
+        "descripcion": "Someterse a las actuaciones de comprobación para verificar el cumplimiento de las condiciones de la beca."
+      },
+      {
+        "id": "d",
+        "descripcion": "Declarar ser becario en años anteriores y estar en condiciones legales de obtener un título académico del mismo o superior nivel."
+      },
+      {
+        "id": "e",
+        "descripcion": "Comunicar a la entidad concedente la obtención de subvenciones o becas para la misma finalidad, procedentes de cualquier administración o ente público o privado nacional o internacional."
+      },
+      {
+        "id": "f",
+        "descripcion": "Informar a la entidad concedente sobre la anulación de matrícula y cualquier alteración de las condiciones originales."
+      },
+      {
+        "id": "g",
+        "descripcion": "Reintegro de los fondos en los casos previstos por la normativa vigente."
+      }
+    ]
   }
 }

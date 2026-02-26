@@ -10,20 +10,31 @@ def generate_summary(filename, model):
         data = json.load(j)
 
     prompt = f"""
-    Eres un redactor profesional. A partir del siguiente JSON, genera un texto claro y formal en español sobre la solicitud de una beca de estudio.
-    El texto debe estar correctamente estructurado con títulos y subtítulos cuando sea conveniente.
-
-    Reglas:
-    - No inventes información.
-    - Usa solo los datos presentes en el JSON.
-    - Utiliza toda la información presente en el JSON.
-    - Redacta en párrafos naturales.
-    - NO menciones que el input es JSON.
-    - NO hagas referencia a los valores null presentes en el JSON
-    - Prioriza la redacción sobre el uso de tablas y listas
+    A partir de la información JSON proporcionada, redacta un documento formal completo de solicitud de beca de estudios, como si fuera un texto definitivo listo para su presentación oficial.
 
     JSON:
     {json.dumps(data, ensure_ascii=False, indent=2)}
+
+    El texto debe:
+
+    - Estar redactado íntegramente en español formal.
+    - Tener una estructura clara con títulos y subtítulos coherentes.
+    - Estar organizado en párrafos bien construidos.
+    - Integrar toda la información disponible en el JSON de forma natural.
+    - Omitir cualquier dato cuyo valor sea null.
+    - NO inventar información bajo ningún concepto.
+    - No utilizar listas o tablas salvo que sea estrictamente necesario.
+    - No hacer referencias al formato de origen de los datos.
+    - No utilizar expresiones como:
+        "El texto describe...",
+        "El JSON contiene...",
+        "La información proporcionada...",
+        "Este documento explica..."
+    - NO explicar ni resumir: redacta directamente el documento final.
+
+    El resultado debe leerse como un documento administrativo real, no como un resumen ni como un análisis.
+
+    Comienza directamente con el título del documento.
     """
 
     response = requests.post(
@@ -43,7 +54,9 @@ def generate_summary(filename, model):
 
 def main():
     for model in MODELS:
+        print("Using", model)
         for filename in CORPUS:
+            print("    Generating", filename)
             summary = generate_summary(filename, model)
 
             output_dir = f"summarisation/results/{model.replace(':', '_')}"

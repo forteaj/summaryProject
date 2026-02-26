@@ -58,6 +58,7 @@ def get_metrics(ground_truth, result):
 def main():
     for model in MODELS:
         for filename in CORPUS:
+            print("Evaluating", model, ";", filename)
             ground_truth = load_file(f"summarisation/ground_truth/{filename}.md")
             result = load_file(f"summarisation/results/{model.replace(':', '_')}/{filename}.md")
 

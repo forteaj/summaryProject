@@ -6,11 +6,11 @@ load_dotenv(find_dotenv())
 API_KEY = os.getenv("VECTARA_API_KEY")
 
 MODELS = [
-    "mistral:7b-instruct", 
     "llama3:8b", 
     "qwen2.5:7b", 
     "granite3.2:8b", 
-    "deepseek-r1:8b"
+    "deepseek-r1:8b",
+    "mistral:7b-instruct"
 ]
 
 CORPUS = [
