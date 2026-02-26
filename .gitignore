@@ -3,6 +3,8 @@
 venv/
 env/
 
+.env
+
 # PyCharm / IntelliJ
 .idea/
 *.iml
@@ -17,3 +19,5 @@ __pycache__/
 # OS
 .DS_Store
 Thumbs.db
+
+desktop.ini

@@ -1,0 +1,250 @@
+{
+  "plazos solicitud": {
+    "universitario": {
+      "desde": "2024-03-19T09:00",
+      "hasta": "2024-05-10T15:00"
+    },
+    "no universitario": {
+      "desde": "2024-03-19T09:00",
+      "hasta": "2024-05-10T15:00"
+    },
+    "excepciones": {
+      "desde": null,
+      "hasta": "2024-12-31T00:00"
+    }
+  },
+  "requisitos generales": {
+    "requisitos": [
+      {
+        "id": "a",
+        "descripcion": "No estar en posesión o no reunir los requisitos legales para la obtención de un título oficial del mismo o superior nivel al correspondiente a los estudios solicitados."
+      },
+      {
+        "id": "b",
+        "descripcion": "Cumplir los requisitos básicos establecidos en el Real Decreto 1721/2007, de 21 de diciembre, así como los que se fijan en el Real Decreto 201/2024, de 27 de febrero."
+      },
+      {
+        "id": "c",
+        "descripcion": "Estar matriculado en alguna de las enseñanzas del sistema educativo español enumeradas en el artículo 3 de esta Resolución."
+      },
+      {
+        "id": "d",
+        "descripcion": "Ser español o poseer la nacionalidad de un Estado miembro de la Unión Europea, con excepciones para ciudadanos comunitarios y extranjeros no comunitarios."
+      }
+    ],
+    "excepciones": [
+      {
+        "relacionado_con": "d",
+        "descripcion": "Los solicitantes de estatuto de refugiado o protección subsidiaria podrán obtener el permiso de residencia legal hasta el 30 de junio de 2024."
+      },
+      {
+        "relacionado_con": "",
+        "descripcion": "No se requerirá la condición de residentes permanentes para ciudadanos comunitarios y familiares que acrediten ser trabajadores por cuenta propia o ajena."
+      }
+    ]
+  },
+  "requisitos academicos": {
+    "grado universitario": null,
+    "master": {
+      "creditos": {
+        "matricula completa": "60",
+        "matricula parcial": "30-59"
+      },
+      "rendimiento anterior": {
+        "primer curso": "5,00 puntos en los estudios previos que les dan acceso al máster (1,17 si procedentes de enseñanzas técnicas)",
+        "posteriores cursos": "5,00 puntos en el primer curso"
+      },
+      "nota media": {
+        "escala": "0 a 10",
+        "formula": "Para planes organizados por asignaturas: V = P x NCa / NCt; Para planes organizados por créditos: suma de (P x NCa) / NCt"
+      },
+      "detalles": "Incluye prácticas externas, trabajos y exámenes finales de grado. Estudiantes con discapacidad pueden reducir la carga lectiva hasta un 50%. Matrícula parcial limitada a beca mínima variable y matrícula. Estudiantes sin título de Grado pueden optar si tienen el título antes del 31/12/2024."
+    },
+    "no universitario": {
+      "creditos": {
+        "matricula completa": "",
+        "matricula parcial": ""
+      },
+      "rendimiento anterior": {
+        "primer curso": "",
+        "posteriores cursos": "2,50 puntos"
+      },
+      "nota media": {
+        "escala": "0 a 10",
+        "formula": "V = P x NCa / NCt"
+      },
+      "detalles": "Las asignaturas no presentadas se valorarán con 2,50 puntos. Únicamente cuando no existan calificaciones numéricas, las calificaciones obtenidas se computarán según el baremo proporcionado."
+    }
+  },
+  "cuantias": {
+    "Beca de matrícula": {
+      "beneficiarios": "solicitantes que cursen enseñanzas universitarias",
+      "cantidad": 1700.0,
+      "umbral": 3,
+      "detalles": "La cuantía de la beca no cubre los créditos para segunda y posteriores matrículas, ni aquellos que excedan del mínimo necesario para obtener la titulación."
+    },
+    "Cuantía fija ligada a la renta del estudiante": {
+      "beneficiarios": "quienes cursen en régimen presencial y de matrícula completa o en régimen semipresencial y de matrícula completa los estudios enumerados en las letras a) a f) del artículo 3.1 y en la letra a) del artículo 3.2 de esta Resolución",
+      "cantidad": 1700.0,
+      "umbral": 1,
+      "detalles": "Se aplica el umbral 1 de renta familiar establecido en esta Resolución."
+    },
+    "Cuantía fija ligada a la residencia del estudiante durante el curso escolar": {
+      "beneficiarios": "quienes cursen en régimen presencial y de matrícula completa o en régimen semipresencial y de matrícula completa los estudios enumerados en las letras a) a f) del artículo 3.1 y en la letra a) del artículo 3.2 de esta Resolución",
+      "cantidad": 2500.0,
+      "umbral": 2,
+      "detalles": "Se requerirá que el solicitante acredite la necesidad de residir fuera del domicilio familiar durante todo el curso escolar, por razón de la distancia entre el mismo y el centro docente, los medios de comunicación existentes y los horarios lectivos. El pago de la cuantía fija ligada a la residencia se procederá exclusivamente cuando se acrediten gastos por razón de alquiler de vivienda o de hospedaje en pensión, residencia de estudiantes o establecimiento similar."
+    },
+    "Cuantía fija ligada a la excelencia en el rendimiento académico": {
+      "beneficiarios": "quienes cursen en régimen de matrícula completa los estudios enumerados en las letras a) a f) del artículo 3.1 y en la letra a) del artículo 3.2 de esta Resolución",
+      "cantidad": 0,
+      "umbral": 3,
+      "detalles": "La cuantía se distribuye según la nota media obtenida, entre 50 y 125 euros."
+    },
+    "Beca básica": {
+      "beneficiarios": "solicitantes que cursen enseñanzas no universitarias",
+      "cantidad": 300.0,
+      "umbral": 3,
+      "detalles": "Esta cuantía será de 350 euros en el caso de los becarios que cursen Ciclos Formativos de Grado Básico."
+    },
+    "Cuantía variable": {
+      "beneficiarios": "solicitantes que cursen enseñanzas universitarias o no universitarias",
+      "cantidad": 60.0,
+      "umbral": 2,
+      "detalles": "La cuantía variable mínima se aplica a quienes cursen estudios no universitarios en modalidades íntegramente no presenciales, matrícula parcial, oferta específica para personas adultas o bachillerato nocturno estructurado en más de dos años, entre otros casos."
+    }
+  },
+  "umbrales renta": {
+    "umbral 1": {
+      "1": 8843,
+      "2": 13264,
+      "3": 17685,
+      "4": 22107,
+      "5": 25644,
+      "6": 29181,
+      "7": 32718,
+      "8": 36255,
+      "incremento miembros adicionales al 8": 3536
+    },
+    "umbral 2": {
+      "1": 13898,
+      "2": 23724,
+      "3": 32201,
+      "4": 38242,
+      "5": 42743,
+      "6": 46142,
+      "7": 49503,
+      "8": 52850,
+      "incremento miembros adicionales al 8": 3340
+    },
+    "umbral 3": {
+      "1": 14818,
+      "2": 25293,
+      "3": 34332,
+      "4": 40773,
+      "5": 45572,
+      "6": 49196,
+      "7": 52780,
+      "8": 56348,
+      "incremento miembros adicionales al 8": 3561
+    }
+  },
+  "deducciones renta": [
+    {
+      "cantidad": 50,
+      "tipo": "porcentaje",
+      "descripcion": "El 50 por 100 de los ingresos aportados por cualquier miembro computable de la familia distinto de los sustentadores principales."
+    },
+    {
+      "cantidad": 525.0,
+      "tipo": "euros",
+      "descripcion": "525,00 euros por cada hermano que sea miembro computable, incluido el solicitante, que conviva en el domicilio familiar"
+    },
+    {
+      "cantidad": 800.0,
+      "tipo": "euros",
+      "descripcion": "800,00 euros para familias numerosas de categoría especial"
+    },
+    {
+      "cantidad": 2000.0,
+      "tipo": "euros",
+      "descripcion": "2.000,00 euros cuando éste se encuentre afectado de una discapacidad de grado igual o superior al sesenta y cinco por ciento"
+    },
+    {
+      "cantidad": 1811.0,
+      "tipo": "euros",
+      "descripcion": "1.811,00 euros por cada hermano o hijo del solicitante o el propio solicitante que esté afectado de discapacidad, legalmente calificada, de grado igual o superior al treinta y tres por ciento"
+    },
+    {
+      "cantidad": 2881.0,
+      "tipo": "euros",
+      "descripcion": "2.881,00 euros cuando la discapacidad sea de grado igual o superior al sesenta cinco por ciento"
+    },
+    {
+      "cantidad": 4000.0,
+      "tipo": "euros",
+      "descripcion": "4.000,00 euros para el propio solicitante universitario quien esté afectado por la discapacidad de grado igual o superior al sesenta y cinco por ciento"
+    },
+    {
+      "cantidad": 1176.0,
+      "tipo": "euros",
+      "descripcion": "1.176,00 euros por cada hermano del solicitante o el propio solicitante menor de 25 años que curse estudios universitarios"
+    },
+    {
+      "cantidad": 20,
+      "tipo": "porcentaje",
+      "descripcion": "El 20 % de la renta familiar cuando el solicitante sea huérfano absoluto y menor de 25 años."
+    },
+    {
+      "cantidad": 500.0,
+      "tipo": "euros",
+      "descripcion": "500,00 euros por pertenecer el solicitante a una familia monoparental"
+    }
+  ],
+  "compatibilidad becas": {
+    "incompatible": [
+      "otras becas de la misma finalidad de otras entidades",
+      "gastos educativos pagados por personas o entidades no miembros computables de la unidad familiar"
+    ],
+    "compatible": [],
+    "compatibilidad_condicionada": [
+      {
+        "item": "bajas en el sistema de Seguridad Social para formación o prácticas",
+        "condicion": ""
+      }
+    ],
+    "consecuencia": "reintegro"
+  },
+  "obligaciones beneficiarios": {
+    "obligaciones": [
+      {
+        "id": "a",
+        "descripcion": "Destinar la beca a la matriculación, asistencia a clase y superación de asignaturas o créditos."
+      },
+      {
+        "id": "b",
+        "descripcion": "Acreditar ante la entidad concedente el cumplimiento de los requisitos y condiciones para obtener la beca."
+      },
+      {
+        "id": "c",
+        "descripcion": "Someterse a las actuaciones de comprobación para verificar el cumplimiento de las condiciones para la concesión de la beca."
+      },
+      {
+        "id": "d",
+        "descripcion": "Declarar en los supuestos de cambio de estudios haber sido becario en años anteriores y estar en posesión o condiciones legales para obtener un título académico equivalente."
+      },
+      {
+        "id": "e",
+        "descripcion": "Comunicar a la entidad concedente la obtención de subvenciones o becas para la misma finalidad, provenientes de cualquier administración o ente público o privado nacional o internacional."
+      },
+      {
+        "id": "f",
+        "descripcion": "Informar a la entidad concedente sobre la anulación de matrícula y cualquier alteración de las condiciones para la concesión de la beca."
+      },
+      {
+        "id": "g",
+        "descripcion": "Reintegro de los fondos en los casos previstos por la normativa vigente."
+      }
+    ]
+  }
+}

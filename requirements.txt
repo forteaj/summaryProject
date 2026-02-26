@@ -1,8 +1,7 @@
 gensim
 faiss-cpu
-nltk
 spacy
-transformers
+transformers==4.38.0 
 torch
 pandas
 numpy
@@ -10,4 +9,9 @@ matplotlib
 seaborn
 wordcloud
 whisper
-sklearn
+scikit-learn
+PyMuPDF
+nltk
+rouge
+bert_score
+markdown
