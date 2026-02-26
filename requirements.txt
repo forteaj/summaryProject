@@ -1,6 +1,5 @@
 gensim
 faiss-cpu
-nltk
 spacy
 transformers==4.38.0 
 torch
