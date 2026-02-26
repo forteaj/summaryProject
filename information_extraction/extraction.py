@@ -232,8 +232,7 @@ def extract_obligaciones(text):
 
     return get_json_from_prompt(prompt)
 
-# Capítulo III Articulo 15 
-def extract_requisitos(text):
+def extract_requisitos_generales(text):
     prompt = f"""
     You are an information extraction system.
 
@@ -262,8 +261,6 @@ def extract_requisitos(text):
     - "relacionado_con" should reference the requirement id if applicable.
     - Do NOT invent anything.
     - If no exceptions exist, return [].
-    - Extract the reference date if mentioned (e.g. "31 de diciembre de 2020").
-    - If no date exists, return "".
 
     Text:
     {text}
@@ -337,26 +334,64 @@ def extract_cuantias(articles):
     
     return result
     
-
 # Capítulo V Articulo 22 - 24 
-def extract_requisitos_grado_universidad(text):
-    pass # TODO
+def extract_requisitos_academicos(articles):
+    result = {
+        "grado universitario": None,
+        "master": None,
+        "no universitario": None
+    }
 
-# Capítulo V Articulo 28 - 30 
-def extract_requisitos_master(text):
-    pass # TODO
+    texts = [
+        articles['22']['content'] + articles['23']['content'] + articles['24']['content'],
+        articles['28']['content'] + articles['29']['content'] + articles['30']['content'],
+        articles['32']['content']
+    ]
 
-# Capítulo V Articulo 33
-def extract_requisitos_grado_superior(text):
-    pass # TODO
+    for i, estudio in enumerate(result.keys()):
+        prompt = f"""
+        You are an information extraction system that returns only JSON.
 
-# Capítulo V Articulo 34
-def extract_requisitos_bachiller(text):
-    pass # TODO
+        Extract the information asked for in the JSON schema from the Spanish text below about the "{estudio}" studies and return ONLY valid JSON.
 
-# Capítulo V Articulo 36
-def extract_requisitos_ciclo_medio(text):
-    pass # TODO
+        Text:
+        {texts[i]}
+
+        Return EXACTLY this type of JSON schema:
+        {{
+            {{
+                "creditos": {{
+                    "matricula completa": "",
+                    "matricula parcial": ""
+                }},
+                "rendimiento anterior": {{
+                    "primer curso": "",
+                    "posteriores cursos": ""
+                }},
+                "nota media": {{
+                    "escala": "",
+                    "formula": "",
+                }},
+                "detalles": ""
+            }},
+        }}
+
+        Rules:
+        - Do NOT explain anything.
+        - DO NOT add additional fields.
+        - Only return a valid JSON
+        - "creditos" refers to the required credits needed to apply for the scholarship. 
+        - "rendimiento anterior" refers to the performance of the applicant in the previous academic year.
+        - "nota media" refers to how the average grade is calculated for the applicant.
+        - "detalles" should include any relevant information not included in "creditos", "rendimiento anterior" and "nota media".
+        - Do NOT include any markdown. Return raw JSON.
+        Output:
+        {{
+        """
+
+        result[estudio] = get_json_from_prompt(prompt)
+
+    return result
 
 def main():
     for filename in CORPUS:
@@ -364,17 +399,18 @@ def main():
 
         info = extraction_pipeline(
             ("plazos solicitud", pdf["VII"]["articles"]["48"]["content"], extract_plazos),
-            ("cuantias", pdf["II"]["articles"], extract_cuantias), #concat_articles(pdf, "II", range(4, 12))
+            ("requisitos generales", pdf["III"]["articles"]["15"]["content"], extract_requisitos_generales),
+            ("requisitos academicos", pdf["V"]["articles"], extract_requisitos_academicos),
+            ("cuantias", pdf["II"]["articles"], extract_cuantias),
             ("umbrales renta", pdf["IV"]["articles"]["19"]["content"], extract_umbrales),
             ("deducciones renta", pdf["IV"]["articles"]["18"]["content"], extract_deducciones),
             ("compatibilidad becas", pdf["VII"]["articles"]["55"]["content"], extract_compatibilidad),
             ("obligaciones beneficiarios", pdf["VI"]["articles"]["40"]["content"], extract_obligaciones),
-            ("requisitos generales", pdf["III"]["articles"]["15"]["content"], extract_requisitos)
         )
 
         os.makedirs('information_extraction/results', exist_ok=True)
         with open(f'information_extraction/results/{filename}.json', 'w', encoding='utf-8') as f:
             json.dump(info, f, ensure_ascii=False, indent=2)
-        
-        return
-main()
+
+if __name__ == "__main__":
+    main()

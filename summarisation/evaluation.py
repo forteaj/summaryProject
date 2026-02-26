@@ -1,25 +1,35 @@
 import markdown
 import json
+import os
+import requests
 from bert_score import score as bert_score
-from nltk.translate.bleu_score import sentence_bleu
 from rouge import Rouge
-from transformers import AutoModelForSequenceClassification
 
-from summarisation.globals import ROOT, MODEL, CORPUS
+from summarisation.globals import MODELS, CORPUS, API_KEY
 from summarisation.util import load_file
 
 def get_metrics(ground_truth, result):
-    bleu = sentence_bleu([ground_truth.split()], result.split())
-
     rouge = Rouge().get_scores(result, ground_truth)
 
-    bert_p, bert_r, bert_f1 = bert_score([result], [ground_truth], lang='es', model_type='bert-base-uncased')
-    
-    model = AutoModelForSequenceClassification.from_pretrained('vectara/hallucination_evaluation_model', trust_remote_code=True)
-    hallucinations = model.predict([(ground_truth, result)])
+    bert_p, bert_r, bert_f1 = bert_score([result], [ground_truth], lang='es', model_type='bert-base-multilingual-cased')
+
+    hallucinations = requests.post(
+        "https://api.vectara.io/v2/evaluate_factual_consistency", 
+        json={
+            "model_parameters": {
+                "model_name": "hhem_v2.3"
+            },
+            "generated_text": result,
+            "source_texts": [ground_truth]
+        }, 
+        headers={
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'x-api-key': API_KEY
+        }
+    )
 
     return {
-        "BLEU": bleu,
         "ROUGE": {
             "ROUGE-1": {
                 "Precision": rouge[0]["rouge-1"]["p"],
@@ -42,15 +52,22 @@ def get_metrics(ground_truth, result):
             "Recall": bert_r.mean().item(),
             "F1": bert_f1.mean().item()
         },
-        "Hallucinations score": hallucinations[0].item()
+        "Consistency": hallucinations.json().get("score")
     }
 
 def main():
-    for filename in CORPUS:
-        ground_truth = load_file(ROOT / 'summarisation' / 'ground_truth' / f'{filename}.md')
-        result = load_file(ROOT / 'summarisation' / 'results' / MODEL.replace(":", "_") / f'{filename}.md')
+    for model in MODELS:
+        for filename in CORPUS:
+            ground_truth = load_file(f"summarisation/ground_truth/{filename}.md")
+            result = load_file(f"summarisation/results/{model.replace(':', '_')}/{filename}.md")
 
-        metrics = get_metrics(ground_truth, result)
-        print(json.dumps(metrics, indent=2))
+            metrics = get_metrics(ground_truth, result)
 
-main()
+            output_dir = f"summarisation/metrics/{model.replace(':', '_')}"
+            os.makedirs(output_dir, exist_ok=True)
+
+            with open(output_dir + f'/{filename}.json', 'w', encoding='utf-8') as f:
+                json.dump(metrics, f, ensure_ascii=False, indent=2)
+
+if __name__ == "__main__":
+    main()

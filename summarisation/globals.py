@@ -1,10 +1,17 @@
+import os
+from dotenv import load_dotenv, find_dotenv
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+load_dotenv(find_dotenv())
+API_KEY = os.getenv("VECTARA_API_KEY")
 
-#MODEL = "mistral:7b-instruct"  # llama?
-
-MODEL = "llama3:latest"
+MODELS = [
+    "mistral:7b-instruct", 
+    "llama3:8b", 
+    "qwen2.5:7b", 
+    "granite3.2:8b", 
+    "deepseek-r1:8b"
+]
 
 CORPUS = [
     'ayudas_21-22', 

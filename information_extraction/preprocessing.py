@@ -3,7 +3,7 @@ import json
 import os
 import re
 
-from information_extraction.globals import CLEAN_PATTERNS, STRUCTURE_PATTERNS, ROOT
+from information_extraction.globals import CLEAN_PATTERNS, STRUCTURE_PATTERNS
 
 def remove_page_numbers(text):
     lines = text.strip().split("\n")
@@ -17,7 +17,6 @@ def remove_page_numbers(text):
     return "\n".join(lines)
 
 def pdf_to_txt(pdf_path):
-    pdf_path = ROOT / pdf_path
     pages = []
     with fitz.open(str(pdf_path)) as pdf:
         for page in pdf:
@@ -71,12 +70,10 @@ def preprocess_pdf(filename, save=True):
     clean = clean_text(text)
     final = parse_hierarchy(clean)
 
-    output_dir = ROOT / "corpus_json"
-    output_dir.mkdir(exist_ok=True)
-    output_path = output_dir / f"{filename}.json"
+    os.makedirs("corpus_json", exist_ok=True)
+    output_path = f"corpus_json/{filename}.json"
 
     if save:
-        os.makedirs('json', exist_ok=True)
         with open(output_path, 'w', encoding='utf-8') as f:
             json.dump(final, f, ensure_ascii=False, indent=2)
     

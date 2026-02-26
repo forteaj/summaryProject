@@ -2,10 +2,10 @@ import requests
 import json
 import os
 
-from summarisation.globals import LLM_ENDPOINT, CORPUS, ROOT, MODEL
+from summarisation.globals import LLM_ENDPOINT, CORPUS, MODELS
 
-def generate_summary(filename):
-    json_path = ROOT / 'information_extraction' / 'results' / f'{filename}.json'
+def generate_summary(filename, model):
+    json_path = f"information_extraction/results/{filename}.json"
     with open(json_path, 'r') as j:
         data = json.load(j)
 
@@ -29,10 +29,10 @@ def generate_summary(filename):
     response = requests.post(
         LLM_ENDPOINT,
         json={
-            "model": MODEL,
+            "model": model,
             "prompt": prompt,
             "stream": False,
-            "keep_alive": "0m",
+            "keep_alive": "30s",
             "options": {
                 "temperature": 0.2
             }
@@ -42,14 +42,15 @@ def generate_summary(filename):
     return response.json()["response"]
 
 def main():
-    for filename in CORPUS:
-        summary = generate_summary(filename)
-        print(summary)
+    for model in MODELS:
+        for filename in CORPUS:
+            summary = generate_summary(filename, model)
 
-        output_dir = ROOT / 'summarisation' / 'results' / MODEL.replace(":", "_")
-        os.makedirs(output_dir, exist_ok=True)
+            output_dir = f"summarisation/results/{model.replace(':', '_')}"
+            os.makedirs(output_dir, exist_ok=True)
 
-        with open(output_dir / f'{filename}.md', 'w', encoding='utf-8') as f:
-            f.write(summary)
+            with open(output_dir + f'/{filename}.md', 'w', encoding='utf-8') as f:
+                f.write(summary)
 
-main()
+if __name__ == "__main__":
+    main()
